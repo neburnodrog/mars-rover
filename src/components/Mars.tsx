@@ -1,8 +1,8 @@
 import styled from "styled-components";
 import marsPic from "../images/mars2.jpg";
-import { GridComponent } from "./Grid";
+import { Grid } from "./Grid";
 
-const Mars = styled.div`
+const MarsStyle = styled.div`
   border-radius: 50%;
   background-image: url(${marsPic});
   background-repeat: no-repeat;
@@ -14,10 +14,10 @@ const Mars = styled.div`
   display: flex;
 `;
 
-export const MarsComponent = () => {
+export const Mars = () => {
   return (
-    <Mars>
-      <GridComponent></GridComponent>
-    </Mars>
+    <MarsStyle>
+      <Grid></Grid>
+    </MarsStyle>
   );
 };

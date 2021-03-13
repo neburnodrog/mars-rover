@@ -21,25 +21,29 @@ const ColStyle = styled.div`
   grid-template-rows: repeat(10, 1fr);
 `;
 
-class Column extends Component {
+interface ColumnProps {
+  colArray: (string|null)[];
+}
 
-  renderCell() {
-    return <Cell></Cell>;
+class Column extends Component<ColumnProps> {
+  renderCell(rowIndex: number) {
+    const cellValue = this.props.colArray[rowIndex];
+    return <Cell>{ cellValue }</Cell>;
   }
 
   render() {
     return (
       <ColStyle>
-        {this.renderCell()}
-        {this.renderCell()}
-        {this.renderCell()}
-        {this.renderCell()}
-        {this.renderCell()}
-        {this.renderCell()}
-        {this.renderCell()}
-        {this.renderCell()}
-        {this.renderCell()}
-        {this.renderCell()}
+        {this.renderCell(0)}
+        {this.renderCell(1)}
+        {this.renderCell(2)}
+        {this.renderCell(3)}
+        {this.renderCell(4)}
+        {this.renderCell(5)}
+        {this.renderCell(6)}
+        {this.renderCell(7)}
+        {this.renderCell(8)}
+        {this.renderCell(9)}
       </ColStyle>
     );
   }
@@ -49,7 +53,7 @@ class Column extends Component {
 /**
  *  GRID COMPONENT
  */
-const Grid = styled.div`
+const GridStyle = styled.div`
   width: 490px;
   height: 490px;
   margin: auto;
@@ -58,25 +62,37 @@ const Grid = styled.div`
   border: 1px solid sandybrown;
 `;
 
-export class GridComponent extends React.Component {
-  renderRow() {
-    return <Column></Column>;
+interface GridProps {
+}
+
+interface GridState {
+  grid: (string|null)[][];
+}
+
+export class Grid extends React.Component<GridProps, GridState> {
+  state = {
+    grid: Array(10).fill(Array(10).fill(null)),
+  }
+
+  renderRow(colIndex: number) {
+    const column = this.state.grid[colIndex];
+    return <Column colArray={column}></Column>;
   }
 
   render() {
     return (
-      <Grid>
-        {this.renderRow()}
-        {this.renderRow()}
-        {this.renderRow()}
-        {this.renderRow()}
-        {this.renderRow()}
-        {this.renderRow()}
-        {this.renderRow()}
-        {this.renderRow()}
-        {this.renderRow()}
-        {this.renderRow()}
-      </Grid>
+      <GridStyle>
+        {this.renderRow(0)}
+        {this.renderRow(1)}
+        {this.renderRow(2)}
+        {this.renderRow(3)}
+        {this.renderRow(4)}
+        {this.renderRow(5)}
+        {this.renderRow(6)}
+        {this.renderRow(7)}
+        {this.renderRow(8)}
+        {this.renderRow(9)}
+      </GridStyle>
     );
   }
 }
