@@ -2,16 +2,18 @@
   margin: 0;
 }
 
-.header-container {
-  width: 50%;
-  margin: 70px auto;
-  transform: rotate(-3deg) skew(11deg);
-  padding-bottom: 3px;
-  border-bottom: 10px solid #81398a;
-  box-shadow: 0px 5px 50px 10px #13a74a;
-  background-color: #13a74991;
+.E {
+  transform: rotate(0deg);
 }
 
-.header {
-  width: 100%;
+.S {
+  transform: rotate(90deg);
+}
+
+.W {
+  transform: rotate(180deg);
+}
+
+.N {
+  transform: rotate(270deg);
 }

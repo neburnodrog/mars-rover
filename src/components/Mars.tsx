@@ -1,6 +1,8 @@
 import styled from "styled-components";
 import marsPic from "../images/mars2.jpg";
 import { Grid } from "./Grid";
+import Controls from "./Controls";
+import Instructions from "./Instructions";
 
 const MarsStyle = styled.div`
   border-radius: 50%;
@@ -17,6 +19,8 @@ const MarsStyle = styled.div`
 export const Mars = () => {
   return (
     <MarsStyle>
+      <Instructions></Instructions>
+      <Controls></Controls>
       <Grid></Grid>
     </MarsStyle>
   );

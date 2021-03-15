@@ -1,7 +1,27 @@
-import * as React from 'react';
-import { Component } from 'react';
+import { FilledInput } from "@material-ui/core";
+import * as React from "react";
+import { Component } from "react";
 import styled from "styled-components";
+import Rover from "./Rover";
 
+const gridArray: boolean[][] = [];
+for (let i = 0; i < 10; i++) {
+  gridArray.push([
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+  ]);
+}
+
+const [col, row] = [0, 3];
+gridArray[col][row] = true;
 
 /**
  *  CELL COMPONENT // each cell is a row in the parent column component
@@ -10,7 +30,7 @@ import styled from "styled-components";
 const Cell = styled.button`
   background-color: transparent;
   border: 1px solid sandybrown;
-  color: palevioletred;
+  padding: 0px;
 `;
 
 /**
@@ -22,13 +42,13 @@ const ColStyle = styled.div`
 `;
 
 interface ColumnProps {
-  colArray: (string|null)[];
+  colArray: boolean[];
 }
 
 class Column extends Component<ColumnProps> {
   renderCell(rowIndex: number) {
     const cellValue = this.props.colArray[rowIndex];
-    return <Cell>{ cellValue }</Cell>;
+    return <Cell>{cellValue ? <Rover></Rover> : null}</Cell>;
   }
 
   render() {
@@ -49,7 +69,6 @@ class Column extends Component<ColumnProps> {
   }
 }
 
-
 /**
  *  GRID COMPONENT
  */
@@ -62,19 +81,18 @@ const GridStyle = styled.div`
   border: 1px solid sandybrown;
 `;
 
-interface GridProps {
-}
+interface GridProps {}
 
 interface GridState {
-  grid: (string|null)[][];
+  grid: boolean[][];
 }
 
 export class Grid extends React.Component<GridProps, GridState> {
   state = {
-    grid: Array(10).fill(Array(10).fill(null)),
-  }
+    grid: gridArray,
+  };
 
-  renderRow(colIndex: number) {
+  renderCol(colIndex: number) {
     const column = this.state.grid[colIndex];
     return <Column colArray={column}></Column>;
   }
@@ -82,16 +100,16 @@ export class Grid extends React.Component<GridProps, GridState> {
   render() {
     return (
       <GridStyle>
-        {this.renderRow(0)}
-        {this.renderRow(1)}
-        {this.renderRow(2)}
-        {this.renderRow(3)}
-        {this.renderRow(4)}
-        {this.renderRow(5)}
-        {this.renderRow(6)}
-        {this.renderRow(7)}
-        {this.renderRow(8)}
-        {this.renderRow(9)}
+        {this.renderCol(0)}
+        {this.renderCol(1)}
+        {this.renderCol(2)}
+        {this.renderCol(3)}
+        {this.renderCol(4)}
+        {this.renderCol(5)}
+        {this.renderCol(6)}
+        {this.renderCol(7)}
+        {this.renderCol(8)}
+        {this.renderCol(9)}
       </GridStyle>
     );
   }
