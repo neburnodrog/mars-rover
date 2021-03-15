@@ -5,7 +5,7 @@
 .header-container {
   width: 50%;
   margin: 70px auto;
-  transform: rotate(3deg) skew(11deg);
+  transform: rotate(-3deg) skew(11deg);
   padding-bottom: 3px;
   border-bottom: 10px solid #81398a;
   box-shadow: 0px 5px 50px 10px #13a74a;
