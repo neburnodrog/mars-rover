@@ -1,3 +1,3 @@
-# control over a rover in the martian surface.
+# control a rover in the martian surface.
 
-## small react project
+## small react project w. typescript
