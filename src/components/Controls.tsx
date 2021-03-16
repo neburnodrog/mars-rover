@@ -27,7 +27,10 @@ export interface ControlsProps {
 export const Controls = (props: ControlsProps) => {
   return (
     <ControlsContainer>
-      <StyledButton className="fwd" onClick={() => props.handlers.handlerFwd()}>
+      <StyledButton
+        className="forward"
+        onClick={() => props.handlers.handlerFwd()}
+      >
         <ArrowForward></ArrowForward>
       </StyledButton>
       <StyledButton
