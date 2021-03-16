@@ -6,7 +6,7 @@ const ControlsContainer = styled.div`
   transform: translate(117%, 128.2%);
 `;
 
-const StyledButton = styled.button`
+const StyledButton = styled.button<{ onClick: () => void }>`
   color: white;
   background: #13a74a6e;
   display: flex;
@@ -15,23 +15,39 @@ const StyledButton = styled.button`
   align-items: center;
 `;
 
-const Controls = () => {
+export interface ControlsProps {
+  handlers: {
+    handlerBack: () => void;
+    handlerLeft: () => void;
+    handlerRight: () => void;
+    handlerFwd: () => void;
+  };
+}
+
+export const Controls = (props: ControlsProps) => {
   return (
     <ControlsContainer>
-      <StyledButton className="fwd">
+      <StyledButton className="fwd" onClick={() => props.handlers.handlerFwd()}>
         <ArrowForward></ArrowForward>
       </StyledButton>
-      <StyledButton className="back">
+      <StyledButton
+        className="back"
+        onClick={() => props.handlers.handlerBack()}
+      >
         <ArrowBack></ArrowBack>
       </StyledButton>
-      <StyledButton className="right">
+      <StyledButton
+        className="right"
+        onClick={() => props.handlers.handlerRight()}
+      >
         <Autorenew></Autorenew>
       </StyledButton>
-      <StyledButton className="left">
+      <StyledButton
+        className="left"
+        onClick={() => props.handlers.handlerLeft()}
+      >
         <Loop></Loop>
       </StyledButton>
     </ControlsContainer>
   );
 };
-
-export default Controls;
