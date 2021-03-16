@@ -1,5 +1,5 @@
-import headerPath from "../images/text-1615485536015.png";
-import styled from "styled-components";
+import headerPath from '../images/text-1615485536015.png';
+import styled from 'styled-components';
 
 const HeaderContainer = styled.div`
   width: 50%;

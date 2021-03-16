@@ -1,6 +1,6 @@
-import "./App.css";
-import { Header } from "./components/Header";
-import { Mars } from "./components/Mars";
+import './App.css';
+import { Header } from './components/Header';
+import { Mars } from './components/Mars';
 
 function App() {
   return (

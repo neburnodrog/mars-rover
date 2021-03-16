@@ -1,5 +1,5 @@
-import { Autorenew, Loop, ArrowForward, ArrowBack } from "@material-ui/icons";
-import styled from "styled-components";
+import { Autorenew, Loop, ArrowForward, ArrowBack } from '@material-ui/icons';
+import styled from 'styled-components';
 
 const ControlsContainer = styled.div`
   position: absolute;
@@ -27,28 +27,16 @@ export interface ControlsProps {
 export const Controls = (props: ControlsProps) => {
   return (
     <ControlsContainer>
-      <StyledButton
-        className="forward"
-        onClick={() => props.handlers.handlerFwd()}
-      >
+      <StyledButton className="forward" onClick={() => props.handlers.handlerFwd()}>
         <ArrowForward></ArrowForward>
       </StyledButton>
-      <StyledButton
-        className="back"
-        onClick={() => props.handlers.handlerBack()}
-      >
+      <StyledButton className="back" onClick={() => props.handlers.handlerBack()}>
         <ArrowBack></ArrowBack>
       </StyledButton>
-      <StyledButton
-        className="right"
-        onClick={() => props.handlers.handlerRight()}
-      >
+      <StyledButton className="right" onClick={() => props.handlers.handlerRight()}>
         <Autorenew></Autorenew>
       </StyledButton>
-      <StyledButton
-        className="left"
-        onClick={() => props.handlers.handlerLeft()}
-      >
+      <StyledButton className="left" onClick={() => props.handlers.handlerLeft()}>
         <Loop></Loop>
       </StyledButton>
     </ControlsContainer>

@@ -1,5 +1,5 @@
-import styled from "styled-components";
-import roverPath from "../images/rover.png";
+import styled from 'styled-components';
+import roverPath from '../images/rover.png';
 
 const RoverStyle = styled.img`
   width: 100%;

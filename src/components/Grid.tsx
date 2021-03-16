@@ -1,6 +1,6 @@
-import * as React from "react";
-import styled from "styled-components";
-import Rover from "./Rover";
+import * as React from 'react';
+import styled from 'styled-components';
+import Rover from './Rover';
 
 /**
  *  CELL COMPONENT // each cell is a row in the parent column component
@@ -35,10 +35,6 @@ export class Grid extends React.Component<GridProps> {
   }
 
   render() {
-    return (
-      <GridStyle>
-        {this.props.grid.map((cell, i) => this.renderCell(cell, i))}
-      </GridStyle>
-    );
+    return <GridStyle>{this.props.grid.map((cell, i) => this.renderCell(cell, i))}</GridStyle>;
   }
 }

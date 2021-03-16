@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 const ContainerInstructions = styled.div`
   position: absolute;
@@ -24,17 +24,9 @@ export interface InstructionsProps {
 export const Instructions = (props: InstructionsProps) => {
   return (
     <ContainerInstructions>
-      <InstructionForm
-        action=""
-        className="form"
-        onSubmit={(e) => e.preventDefault()}
-      >
+      <InstructionForm action="" className="form" onSubmit={(e) => e.preventDefault()}>
         <StyledInput type="text" />
-        <StyledInput
-          type="submit"
-          value="Send Instructions"
-          onClick={props.onClick}
-        />
+        <StyledInput type="submit" value="Send Instructions" onClick={props.onClick} />
       </InstructionForm>
     </ContainerInstructions>
   );
