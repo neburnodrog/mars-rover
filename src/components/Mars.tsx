@@ -56,12 +56,12 @@ export class Mars extends React.Component<MarsProps, MarsState> {
         if (forward) {
           this.setState({ position: Number(`${row < 9 ? row + 1 : 9}${col}`) });
         } else {
-          this.setState({ position: Number(`${row > 0 ? row - 1 : 0}${col}`) });
+          this.setState({ position: Number(`${0 < row ? row - 1 : 0}${col}`) });
         }
         break;
       case 'N':
         if (forward) {
-          this.setState({ position: Number(`${row > 0 ? row - 1 : 0}${col}`) });
+          this.setState({ position: Number(`${0 < row ? row - 1 : 0}${col}`) });
         } else {
           this.setState({ position: Number(`${row < 9 ? row + 1 : 9}${col}`) });
         }
@@ -104,7 +104,6 @@ export class Mars extends React.Component<MarsProps, MarsState> {
 
   logger = (position: number): void => {
     const logBook = [...this.state.logBook];
-    console.log(`positioni is in logBook: ${position in logBook}`);
     if (position in logBook) {
       console.log('it is already in logbook');
     } else {
