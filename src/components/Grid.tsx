@@ -25,19 +25,19 @@ const GridStyle = styled.div`
   border: 1px solid sandybrown;
 `;
 
-interface GridProps {
+export interface GridProps {
   grid: boolean[];
 }
 
 export class Grid extends React.Component<GridProps> {
-  renderCell(cell: boolean) {
-    return <Cell>{cell ? <Rover></Rover> : null}</Cell>;
+  renderCell(cell: boolean, i: number) {
+    return <Cell key={i}>{cell ? <Rover></Rover> : null}</Cell>;
   }
 
   render() {
     return (
       <GridStyle>
-        {this.props.grid.map((cell) => this.renderCell(cell))}
+        {this.props.grid.map((cell, i) => this.renderCell(cell, i))}
       </GridStyle>
     );
   }
