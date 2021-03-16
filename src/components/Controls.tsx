@@ -15,28 +15,26 @@ const StyledButton = styled.button<{ onClick: () => void }>`
   align-items: center;
 `;
 
-export interface ControlsProps {
+export type ControlsProps = {
   handlers: {
-    handlerBack: () => void;
-    handlerLeft: () => void;
-    handlerRight: () => void;
-    handlerFwd: () => void;
+    handlerMove: (forward: boolean) => void;
+    handlerTurn: (left: boolean) => void;
   };
-}
+};
 
 export const Controls = (props: ControlsProps) => {
   return (
     <ControlsContainer>
-      <StyledButton className="forward" onClick={() => props.handlers.handlerFwd()}>
+      <StyledButton className="forward" onClick={() => props.handlers.handlerMove(true)}>
         <ArrowForward></ArrowForward>
       </StyledButton>
-      <StyledButton className="back" onClick={() => props.handlers.handlerBack()}>
+      <StyledButton className="back" onClick={() => props.handlers.handlerMove(false)}>
         <ArrowBack></ArrowBack>
       </StyledButton>
-      <StyledButton className="right" onClick={() => props.handlers.handlerRight()}>
+      <StyledButton className="left" onClick={() => props.handlers.handlerTurn(true)}>
         <Autorenew></Autorenew>
       </StyledButton>
-      <StyledButton className="left" onClick={() => props.handlers.handlerLeft()}>
+      <StyledButton className="right" onClick={() => props.handlers.handlerTurn(false)}>
         <Loop></Loop>
       </StyledButton>
     </ControlsContainer>

@@ -1,3 +1,4 @@
+import * as React from 'react';
 import styled from 'styled-components';
 import roverPath from '../images/rover.png';
 
@@ -8,8 +9,16 @@ const RoverStyle = styled.img`
   box-shadow: 0px 0px 20px rgb(245, 4, 4);
 `;
 
-const Rover = () => {
-  return <RoverStyle src={roverPath} alt="<oO>" />;
+export type RoverProps = {
+  direction: string;
 };
 
-export default Rover;
+export class Rover extends React.Component<RoverProps> {
+  render() {
+    return (
+      <div className={this.props.direction}>
+        <RoverStyle src={roverPath} alt="<oO>" />;
+      </div>
+    );
+  }
+}
