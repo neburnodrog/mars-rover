@@ -13,13 +13,13 @@ const directions = "NESW";
 /**
  *  Starting Array
  */
-const gridArray: boolean[] = [];
+const startGrid: boolean[] = [];
 for (let i = 0; i < 100; i++) {
-  gridArray.push(false);
+  startGrid.push(false);
 }
 const startDir = "E";
 const startPos = "30";
-gridArray[Number(startPos)] = true;
+startGrid[Number(startPos)] = true;
 
 /**
  *  Mars Component Style
@@ -48,17 +48,15 @@ export interface MarsState {
 }
 
 export class Mars extends React.Component<MarsProps, MarsState> {
-  constructor(props: MarsProps) {
-    super(props);
-    this.state = {
-      direction: startDir,
-      position: startPos,
-      grid: gridArray,
-    };
-  }
+  state = {
+    direction: startDir,
+    position: startPos,
+    grid: startGrid,
+  };
 
-  handleClickFwd() {
-    const { position, direction, grid } = this.state;
+  handlerFwd() {
+    console.log(this.state);
+    const { direction, position, grid } = this.state;
     const [row, col] = position.split("").map((str) => Number(str));
 
     switch (direction) {
@@ -83,7 +81,7 @@ export class Mars extends React.Component<MarsProps, MarsState> {
     });
   }
 
-  handleClickBack() {
+  handlerBack() {
     const { position, direction, grid } = this.state;
     const [row, col] = position.split("").map((str) => Number(str));
     switch (direction) {
@@ -108,7 +106,7 @@ export class Mars extends React.Component<MarsProps, MarsState> {
     });
   }
 
-  handleClickRight() {
+  handlerRight() {
     const { direction } = this.state;
     const currentIndex = directions.indexOf(direction);
     const newIndex = (currentIndex + 1) % 4;
@@ -116,7 +114,7 @@ export class Mars extends React.Component<MarsProps, MarsState> {
     this.setState({ direction: newDir });
   }
 
-  handleClickLeft() {
+  handlerLeft() {
     const { direction } = this.state;
     const currentIndex = directions.indexOf(direction);
     const newIndex = (currentIndex - 1) % 4 === -1 ? 3 : (currentIndex - 1) % 4;
@@ -132,10 +130,10 @@ export class Mars extends React.Component<MarsProps, MarsState> {
         <Instructions onClick={this.handleInstructions}></Instructions>
         <Controls
           handlers={{
-            handlerBack: this.handleClickBack,
-            handlerLeft: this.handleClickLeft,
-            handlerRight: this.handleClickRight,
-            handlerFwd: this.handleClickFwd,
+            handlerBack: this.handlerBack,
+            handlerLeft: this.handlerLeft,
+            handlerRight: this.handlerRight,
+            handlerFwd: this.handlerFwd,
           }}
         ></Controls>
         <Grid grid={this.state.grid}></Grid>
@@ -143,5 +141,3 @@ export class Mars extends React.Component<MarsProps, MarsState> {
     );
   }
 }
-
-export default Mars;
