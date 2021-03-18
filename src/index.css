@@ -7,3 +7,31 @@ body {
   background-image: url('./images/space2.jpg');
   z-index: -1;
 }
+
+.App {
+  margin: 0;
+}
+
+.E {
+  transform: rotate(0deg);
+  width: 100%;
+  height: 100%;
+}
+
+.S {
+  transform: rotate(90deg);
+  width: 100%;
+  height: 100%;
+}
+
+.W {
+  transform: rotate(180deg);
+  width: 100%;
+  height: 100%;
+}
+
+.N {
+  transform: rotate(270deg);
+  width: 100%;
+  height: 100%;
+}

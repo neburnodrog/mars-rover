@@ -15,7 +15,7 @@ const HeaderImg = styled.img`
   width: 100%;
 `;
 
-export const Header = () => {
+export const Header: React.FC = () => {
   return (
     <HeaderContainer>
       <HeaderImg src={headerPath} alt="Ironhack Mars Mission" />
