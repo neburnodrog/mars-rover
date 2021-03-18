@@ -5,14 +5,8 @@ import { Grid } from './Grid';
 import { Controls } from './Controls';
 import { Instructions } from './Instructions';
 
-/**
- *  Possible Directions
- */
 const directions = 'NESW';
 
-/**
- *  Mars Component Style
- */
 const MarsStyle = styled.div`
   border-radius: 50%;
   background-image: url(${marsPic});
@@ -25,92 +19,116 @@ const MarsStyle = styled.div`
   display: flex;
 `;
 
-/**
- *  Mars Component
- */
-export type MarsProps = {};
-
 export type MarsState = {
   direction: string;
-  position: number;
+  position: number[];
   grid: boolean[];
-  logBook: number[];
+  logBook: number[][];
 };
 
-export class Mars extends React.Component<MarsProps, MarsState> {
+export class Mars extends React.Component<{}, MarsState> {
   state: MarsState = {
     direction: 'E',
-    position: 30,
+    position: [3, 0],
     grid: Array(100).fill(false),
     logBook: [],
   };
 
-  handlerMove = (forward: boolean): void => {
+  handlerFwd = (): void => {
     const { direction, position } = this.state;
-    const [row, col] = String(position)
-      .split('')
-      .map((str) => Number(str));
+
+    this.logger(position);
+
+    const [row, col] = position;
+    switch (direction) {
+      case 'S':
+        this.setState({
+          position: [row < 9 ? row + 1 : 9, col],
+        });
+        break;
+      case 'N':
+        this.setState({
+          position: [0 < row ? row - 1 : 0, col],
+        });
+        break;
+      case 'E':
+        this.setState({
+          position: [row, col < 9 ? col + 1 : 9],
+        });
+        break;
+      case 'W':
+        this.setState({
+          position: [row, 0 < col ? col - 1 : 0],
+        });
+        break;
+    }
+  };
+
+  handlerBck = (): void => {
+    const { direction, position } = this.state;
+
+    this.logger(position);
+
+    const [row, col] = position;
 
     switch (direction) {
       case 'S':
-        if (forward) {
-          this.setState({ position: Number(`${row < 9 ? row + 1 : 9}${col}`) });
-        } else {
-          this.setState({ position: Number(`${0 < row ? row - 1 : 0}${col}`) });
-        }
+        this.setState({
+          position: [0 < row ? row - 1 : 0, col],
+        });
         break;
       case 'N':
-        if (forward) {
-          this.setState({ position: Number(`${0 < row ? row - 1 : 0}${col}`) });
-        } else {
-          this.setState({ position: Number(`${row < 9 ? row + 1 : 9}${col}`) });
-        }
+        this.setState({
+          position: [row < 9 ? row + 1 : 9, col],
+        });
         break;
       case 'E':
-        if (forward) {
-          this.setState({ position: Number(`${row}${col < 9 ? col + 1 : 9}`) });
-        } else {
-          this.setState({ position: Number(`${row}${col > 0 ? col - 1 : 0}`) });
-        }
+        this.setState({
+          position: [row, 0 < col ? col - 1 : 0],
+        });
         break;
       case 'W':
-        if (forward) {
-          this.setState({ position: Number(`${row}${col < 9 ? col - 1 : 9}`) });
-        } else {
-          this.setState({ position: Number(`${row}${col > 0 ? col + 1 : 0}`) });
-        }
+        this.setState({
+          position: [row, col < 9 ? col + 1 : 9],
+        });
         break;
     }
-
-    this.logger(position);
   };
 
-  handlerTurn = (left: boolean): void => {
+  handlerLeft = (): void => {
     const { direction } = this.state;
     const currentIndex = directions.indexOf(direction);
-    if (left) {
-      const newIndex = (currentIndex + 1) % 4;
-      const newDir = directions[newIndex];
-      this.setState({ direction: newDir });
-    } else {
-      /** if right */
-      const newIndex = (currentIndex - 1) % 4 === -1 ? 3 : (currentIndex - 1) % 4;
-      const newDir = directions[newIndex];
-      this.setState({ direction: newDir });
-    }
+    const newIndex = (currentIndex + 1) % 4;
+    const newDir = directions[newIndex];
+    this.setState({ direction: newDir });
+  };
+
+  handlerRight = (): void => {
+    const { direction } = this.state;
+    const currentIndex = directions.indexOf(direction);
+    const newIndex = (currentIndex - 1) % 4 === -1 ? 3 : (currentIndex - 1) % 4;
+    const newDir = directions[newIndex];
+    this.setState({ direction: newDir });
   };
 
   handleInstructions = (): void => {};
 
-  logger = (position: number): void => {
+  logger = (position: number[]): void => {
     const logBook = [...this.state.logBook];
-    if (position in logBook) {
-      console.log('it is already in logbook');
+    const arrayAlreadyInLog = this.arrayAlreadyInLogBook(position, logBook);
+    if (arrayAlreadyInLog) {
+      console.log(`${position} is already in ${JSON.stringify(logBook)}`);
     } else {
       logBook.push(position);
+      console.log(`Pushed ${position} into ${JSON.stringify(logBook)}`);
+      this.setState({ logBook: logBook });
     }
-    console.log(position, logBook, this);
-    this.setState({ logBook: logBook });
+  };
+
+  arrayAlreadyInLogBook = (arr: number[], arrOfArrays: number[][]): boolean => {
+    const arrString = JSON.stringify(arr);
+    const arrOfArraysString = JSON.stringify(arrOfArrays);
+    return `${arrOfArraysString}`.indexOf(`${arrString}`) > -1;
   };
 
   render() {
@@ -121,8 +139,10 @@ export class Mars extends React.Component<MarsProps, MarsState> {
         <Instructions onClick={this.handleInstructions}></Instructions>
         <Controls
           handlers={{
-            handlerMove: this.handlerMove,
-            handlerTurn: this.handlerTurn,
+            handlerFwd: this.handlerFwd,
+            handlerBck: this.handlerBck,
+            handlerLeft: this.handlerLeft,
+            handlerRight: this.handlerRight,
           }}
         ></Controls>
         <Grid grid={grid} position={position} direction={direction} logBook={logBook}></Grid>
