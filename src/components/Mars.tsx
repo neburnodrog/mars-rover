@@ -136,7 +136,7 @@ export class Mars extends React.Component<{}, MarsState> {
 
     return (
       <MarsStyle>
-        <Instructions onClick={this.handleInstructions}></Instructions>
+        <Instructions handleInstructions={this.handleInstructions}></Instructions>
         <Controls
           handlers={{
             handlerFwd: this.handlerFwd,

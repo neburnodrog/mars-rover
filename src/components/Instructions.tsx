@@ -1,3 +1,5 @@
+import * as React from 'react';
+import { useState } from 'react';
 import styled from 'styled-components';
 
 const ContainerInstructions = styled.div`
@@ -6,7 +8,7 @@ const ContainerInstructions = styled.div`
   left: 37%;
 `;
 
-const InstructionForm = styled.form`
+const InstructionForm = styled.div`
   display: flex;
 `;
 
@@ -17,16 +19,30 @@ const StyledInput = styled.input`
   font-size: 0.8em;
 `;
 
-export interface InstructionsProps {
-  onClick: () => void;
-}
+const StyledButton = styled.button`
+  background: #13a74a6e;
+  color: white;
+  padding: 8px 15px;
+  font-size: 0.8em;
+`;
 
-export const Instructions = (props: InstructionsProps) => {
+export type InstructionsProps = {
+  handleInstructions: (instructions: string) => void;
+};
+
+export const Instructions: React.FC<InstructionsProps> = ({ handleInstructions }) => {
+  const [instructions, setInstructions] = useState('');
+
+  const onClick = () => {
+    setInstructions('');
+    handleInstructions(instructions);
+  };
+
   return (
     <ContainerInstructions>
-      <InstructionForm action="" className="form" onSubmit={(e) => e.preventDefault()}>
-        <StyledInput type="text" />
-        <StyledInput type="submit" value="Send Instructions" onClick={props.onClick} />
+      <InstructionForm className="form">
+        <StyledInput type="text" onChange={(e) => setInstructions(e.target.value)} />
+        <StyledButton onClick={onClick}>Send Instructions</StyledButton>
       </InstructionForm>
     </ContainerInstructions>
   );
