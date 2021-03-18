@@ -111,7 +111,9 @@ export class Mars extends React.Component<{}, MarsState> {
     this.setState({ direction: newDir });
   };
 
-  handleInstructions = (): void => {};
+  handleInstructions = (instructions: string): void => {
+    alert('The instructions: "' + instructions + '" are beeing sent to the rover!');
+  };
 
   logger = (position: number[]): void => {
     const logBook = [...this.state.logBook];
