@@ -17,27 +17,27 @@ const StyledButton = styled.button<{ onClick: () => void }>`
 
 export type ControlsProps = {
   handlers: {
-    handlerFwd: () => void;
-    handlerBck: () => void;
-    handlerLeft: () => void;
-    handlerRight: () => void;
+    handleForward: () => void;
+    handleBack: () => void;
+    handleLeft: () => void;
+    handleRight: () => void;
   };
 };
 
 export const Controls: React.FC<ControlsProps> = ({ handlers }) => {
   return (
     <ControlsContainer>
-      <StyledButton className="forward" onClick={() => handlers.handlerFwd()}>
+      <StyledButton className="forward" onClick={() => handlers.handleForward()}>
         <ArrowForward></ArrowForward>
       </StyledButton>
-      <StyledButton className="back" onClick={() => handlers.handlerBck()}>
+      <StyledButton className="back" onClick={() => handlers.handleBack()}>
         <ArrowBack></ArrowBack>
       </StyledButton>
-      <StyledButton className="left" onClick={() => handlers.handlerLeft()}>
-        <Autorenew></Autorenew>
-      </StyledButton>
-      <StyledButton className="right" onClick={() => handlers.handlerRight()}>
+      <StyledButton className="left" onClick={() => handlers.handleLeft()}>
         <Loop></Loop>
+      </StyledButton>
+      <StyledButton className="right" onClick={() => handlers.handleRight()}>
+        <Autorenew></Autorenew>
       </StyledButton>
     </ControlsContainer>
   );

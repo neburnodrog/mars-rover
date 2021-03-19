@@ -5,8 +5,6 @@ import { Grid } from './Grid';
 import { Controls } from './Controls';
 import { Instructions } from './Instructions';
 
-const directions = 'NESW';
-
 const MarsStyle = styled.div`
   border-radius: 50%;
   background-image: url(${marsPic});
@@ -20,27 +18,30 @@ const MarsStyle = styled.div`
 `;
 
 export type MarsState = {
-  direction: string;
+  directions: string[];
   position: number[];
   grid: boolean[];
   logBook: number[][];
+  instructions: string[];
 };
 
 export class Mars extends React.Component<{}, MarsState> {
   state: MarsState = {
-    direction: 'E',
+    directions: ['N', 'E', 'S', 'W'],
     position: [3, 0],
     grid: Array(100).fill(false),
     logBook: [],
+    instructions: [],
   };
 
-  handlerFwd = (): void => {
-    const { direction, position } = this.state;
+  handleForward = (): void => {
+    const { directions, position } = this.state;
 
+    const dir = directions[0];
     this.logger(position);
 
     const [row, col] = position;
-    switch (direction) {
+    switch (dir) {
       case 'S':
         this.setState({
           position: [row < 9 ? row + 1 : 9, col],
@@ -64,14 +65,15 @@ export class Mars extends React.Component<{}, MarsState> {
     }
   };
 
-  handlerBck = (): void => {
-    const { direction, position } = this.state;
+  handleBack = (): void => {
+    const { directions, position } = this.state;
 
+    const dir = directions[0];
     this.logger(position);
 
     const [row, col] = position;
 
-    switch (direction) {
+    switch (dir) {
       case 'S':
         this.setState({
           position: [0 < row ? row - 1 : 0, col],
@@ -95,25 +97,51 @@ export class Mars extends React.Component<{}, MarsState> {
     }
   };
 
-  handlerLeft = (): void => {
-    const { direction } = this.state;
-    const currentIndex = directions.indexOf(direction);
-    const newIndex = (currentIndex + 1) % 4;
-    const newDir = directions[newIndex];
-    this.setState({ direction: newDir });
+  handleRight = (): void => {
+    const directions = [...this.state.directions];
+    directions.push(directions.shift()!);
+    this.setState({ directions: directions });
   };
 
-  handlerRight = (): void => {
-    const { direction } = this.state;
-    const currentIndex = directions.indexOf(direction);
-    const newIndex = (currentIndex - 1) % 4 === -1 ? 3 : (currentIndex - 1) % 4;
-    const newDir = directions[newIndex];
-    this.setState({ direction: newDir });
+  handleLeft = (): void => {
+    const directions = [...this.state.directions];
+    directions.unshift(directions.pop()!);
+    this.setState({ directions: directions });
   };
 
   handleInstructions = (instructions: string): void => {
     alert('The instructions: "' + instructions + '" are beeing sent to the rover!');
+    const cleanInstructions = instructions.replace(' ', '').split('');
+
+    this.setState({ instructions: cleanInstructions });
   };
+
+  executeInstruction = (instruction: string) => {
+    switch (instruction) {
+      case 'l':
+        this.handleLeft();
+        break;
+      case 'r':
+        this.handleRight();
+        break;
+      case 'f':
+        this.handleForward();
+        break;
+      case 'b':
+        this.handleBack();
+        break;
+    }
+  };
+
+  componentDidUpdate() {
+    const instructions = [...this.state.instructions];
+
+    if (instructions.length > 0) {
+      const nextInstruction: string = instructions.shift()!;
+      this.executeInstruction(nextInstruction);
+      this.setState({ instructions: instructions });
+    }
+  }
 
   logger = (position: number[]): void => {
     const logBook = [...this.state.logBook];
@@ -134,20 +162,20 @@ export class Mars extends React.Component<{}, MarsState> {
   };
 
   render() {
-    const { grid, position, direction, logBook } = this.state;
+    const { grid, position, directions: direction, logBook } = this.state;
 
     return (
       <MarsStyle>
         <Instructions handleInstructions={this.handleInstructions}></Instructions>
         <Controls
           handlers={{
-            handlerFwd: this.handlerFwd,
-            handlerBck: this.handlerBck,
-            handlerLeft: this.handlerLeft,
-            handlerRight: this.handlerRight,
+            handleForward: this.handleForward,
+            handleBack: this.handleBack,
+            handleLeft: this.handleLeft,
+            handleRight: this.handleRight,
           }}
         ></Controls>
-        <Grid grid={grid} position={position} direction={direction} logBook={logBook}></Grid>
+        <Grid grid={grid} position={position} direction={direction[0]} logBook={logBook}></Grid>
       </MarsStyle>
     );
   }
